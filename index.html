@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson List</title>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Lesson List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Location</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="lesson in lessons" :key="lesson.location">
+          <td>{{ lesson.topic }}</td>
+          <td>{{ lesson.location }}</td>
+          <td>{{ lesson.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <script>
+    let store = new Vue({
+      data() {
+        return {
+          lessons: [],
+        }
+      },
+      mounted() {
+        fetch('/lessons')
+          .then(response => response.json())
+          .then(data => this.lessons = data);
+      },
+    });
+
+    store.$mount('#app');
+  </script>
+</body>
+</html>
